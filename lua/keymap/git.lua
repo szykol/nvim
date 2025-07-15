@@ -34,7 +34,7 @@ local function git_options()
   }
 
   vim.ui.select(options, {
-    prompt = 'Choose your poison',
+    prompt = 'Choose your poison: ',
     format_item = function(item)
       return item.name
     end,
