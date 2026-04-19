@@ -5,6 +5,25 @@ vim.keymap.set("n", "[g", function()
 	require("gitsigns").nav_hunk("prev")
 end, { desc = "Prev hunk" })
 
+local BRANCHES = {
+	"origin/main",
+	"origin/develop",
+	"origin/master",
+}
+
+local DIFF_OPTS = {
+	"origin/main",
+	"origin/develop",
+	"origin/master",
+	"origin/main...",
+}
+
+local function cmd_with_option(cmd)
+	return function(choice)
+		vim.cmd(cmd .. " " .. choice)
+	end
+end
+
 local function git_options()
 	local options = {
 		{ name = "Status", cmd = "Git" },
@@ -14,6 +33,7 @@ local function git_options()
 		{ name = "Push", cmd = "Git push" },
 		{ name = "Push (set upstream)", cmd = "Git push -u origin @" },
 		{ name = "Push (force-with-lease)", cmd = "Git push --force-with-lease" },
+
 		{
 			name = "Branch create",
 			cmd = function()
@@ -25,10 +45,32 @@ local function git_options()
 				end)
 			end,
 		},
-		{ name = "Rebase", cmd = "Git rebase origin/main" },
+		{
+			name = "Rebase",
+			cmd = function()
+				vim.ui.select(BRANCHES, { prompt = "Branch: " }, function(choice)
+					if choice == nil or choice == "" then
+						return
+					end
+					vim.notify(choice)
+					vim.cmd("Git rebase " .. choice)
+				end)
+			end,
+		},
 		{ name = "Diff", cmd = "DiffviewOpen" },
-		{ name = "Diff merge-base", cmd = "DiffviewOpen origin/main..." },
-		{ name = "Diff origin/main", cmd = "DiffviewOpen origin/main" },
+		{
+			name = "Diff branch",
+			cmd = function()
+				vim.ui.select(DIFF_OPTS, { prompt = "Diff option: " }, function(choice)
+					if choice == nil or choice == "" then
+						return
+					end
+
+					vim.notify("dupa jasia")
+					vim.cmd("DiffviewOpen " .. choice)
+				end)
+			end,
+		},
 		{ name = "Diff close", cmd = "DiffviewClose" },
 		{ name = "Blame", cmd = "Git blame" },
 		{ name = "Branches", cmd = "Telescope git_branches" },
