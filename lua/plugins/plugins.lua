@@ -98,8 +98,6 @@ return {
 			-- (Default) Only show the documentation popup when manually triggered
 			completion = { documentation = { auto_show = false } },
 
-			-- Default list of enabled providers defined so that you can extend it
-			-- elsewhere in your config, without redefining it, due to `opts_extend`
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer" },
 			},
@@ -253,11 +251,11 @@ return {
 						vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 					end
 					-- Find references for the word under your cursor.
-					map("gr", fzf.lsp_references, "[G]oto [R]eferences")
+					map("grr", fzf.lsp_references, "[G]oto [R]eferences")
 
 					-- Jump to the implementation of the word under your cursor.
 					--  Useful when your language has ways of declaring types without an actual implementation.
-					map("gI", fzf.lsp_implementations, "[G]oto [I]mplementation")
+					-- map("gI", fzf.lsp_implementations, "[G]oto [I]mplementation")
 
 					-- Jump to the definition of the word under your cursor.
 					--  This is where a variable was first declared, or where a function is defined, etc.

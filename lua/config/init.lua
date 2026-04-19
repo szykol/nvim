@@ -10,3 +10,6 @@ vim.lsp.enable("jsonls")
 -- vim.lsp.enable("ty")
 vim.lsp.enable("typos_lsp")
 -- vim.lsp.enable("copilot")
+vim.lsp.enable("rust_analyzer")
+
+vim.lsp.codelens.enable()
