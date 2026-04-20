@@ -42,6 +42,21 @@ return {
 				typescript = { "prettier", stop_after_first = true },
 				typescriptreact = { "prettier", stop_after_first = true },
 			},
+
+			formatters = {
+				-- override ruff format to run from uv
+				ruff_format = {
+					inherit = "ruff_format",
+					command = "uv",
+					prepend_args = { "run", "ruff" },
+				},
+				-- override ruff format imports to run from uv
+				ruff_organize_imports = {
+					inherit = "ruff_organize_imports",
+					command = "uv",
+					prepend_args = { "run", "ruff" },
+				},
+			},
 		},
 	},
 }
